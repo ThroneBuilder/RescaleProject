@@ -169,20 +169,20 @@ exits 0 (deterministic).
 
 ### Implementation for User Story 5 (E2E continuation)
 
-- [ ] T040 [US5] Create `tests/package.json` with `@playwright/test@^1.50.0` as the only dependency; add `"test"` script: `playwright test`
-- [ ] T041 [US5] Create `tests/playwright.config.ts`: `baseURL: 'http://frontend'`, `use: { headless: true }`, `workers: 1`, `retries: 0`, `testDir: './e2e'`
-- [ ] T042 [P] [US5] Write `tests/Dockerfile`: `FROM mcr.microsoft.com/playwright:v1.50.0-noble`; `WORKDIR /app`; copy `package.json` + `package-lock.json`; `RUN npm ci`; copy `e2e/` and `playwright.config.ts`; no CMD (command provided by `docker compose run`)
-- [ ] T043 [US5] Update `tests` service in `docker-compose.yml`: `build: tests/`; `depends_on: {frontend: {condition: service_healthy}, backend: {condition: service_healthy}}`; `profiles: [test]` so it does not start with `make up`
-- [ ] T044 [US5] Write `tests/e2e/jobs.spec.ts` with two tests:
+- [x] T040 [US5] Create `tests/package.json` with `@playwright/test@1.50.0` (exact pin) as the only dependency; add `"test"` script: `playwright test`
+- [x] T041 [US5] Create `tests/playwright.config.ts`: `baseURL: 'http://frontend'`, `use: { headless: true }`, `workers: 1`, `retries: 0`, `testDir: './e2e'`
+- [x] T042 [P] [US5] Write `tests/Dockerfile`: `FROM mcr.microsoft.com/playwright:v1.50.0-noble`; `WORKDIR /app`; copy `package.json` + `package-lock.json`; `RUN npm ci`; copy `e2e/` and `playwright.config.ts`; no CMD (command provided by `docker compose run`)
+- [x] T043 [US5] `tests` service in `docker-compose.yml` already correctly configured: `build: tests/`; `depends_on: {frontend: {condition: service_healthy}, backend: {condition: service_healthy}}`; `profiles: [test]`
+- [x] T044 [US5] Write `tests/e2e/jobs.spec.ts` with two tests:
     (a) `test('create job appears with PENDING status')`: navigate to `/`; fill name input; click submit; assert new row appears containing job name and "PENDING"
     (b) `test('update job status is reflected in list')`: create a job via POST API setup; navigate to `/`; find the job row; change `<select>` to "RUNNING"; assert the row now shows "RUNNING"
-- [ ] T045 [US5] Update `Makefile` `test` target to be fully self-contained (satisfies assignment "execute make test on a clean machine" requirement):
+- [x] T045 [US5] `Makefile` `test` target is fully self-contained; updated to add explicit `docker compose --profile test build tests` step to force tests image rebuild on each run (avoids stale cached image):
     ```makefile
     test:
         docker compose up --build -d --wait
-        docker compose run --rm tests npx playwright test
+        docker compose --profile test build tests
+        docker compose --profile test run --rm tests npx playwright test
     ```
-    Remove the placeholder `echo "no tests yet"` from T013. This target builds all images, starts all services (waiting for health checks), then runs Playwright — no prior `make build` or `make up` required
 
 **Checkpoint**: `make test` exits 0 on first run. Re-run from `make clean` also exits 0.
 

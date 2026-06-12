@@ -8,7 +8,8 @@ up:
 
 test:
 	docker compose up --build -d --wait
-	docker compose run --rm --profile test tests npx playwright test
+	docker compose --profile test build tests
+	docker compose --profile test run --rm tests npx playwright test
 
 stop:
 	docker compose stop

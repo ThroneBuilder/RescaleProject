@@ -1,0 +1,6 @@
+FROM mcr.microsoft.com/playwright:v1.50.0-noble
+WORKDIR /app
+COPY package.json package-lock.json* ./
+RUN npm ci
+COPY playwright.config.ts ./
+COPY e2e/ ./e2e/
