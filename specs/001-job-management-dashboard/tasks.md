@@ -78,17 +78,17 @@ Error scenario: stop the backend container; UI shows an error message, not a bla
 
 ### Implementation for User Story 1
 
-- [ ] T016 [P] [US1] Define `Job` and `JobStatus` models in `backend/jobs/models.py`: `Job` has `id` (AutoField PK), `name` (CharField max_length=255), `created_at`/`updated_at` (auto); `JobStatus` has `id`, `job` (FK→Job ON DELETE CASCADE), `status_type` (TextChoices: PENDING/RUNNING/COMPLETED/FAILED), `timestamp` (auto_now_add); add `Meta.indexes` with `Index(fields=['job', '-timestamp'])` on JobStatus
-- [ ] T017 [US1] Generate and apply initial migration: `python manage.py makemigrations jobs` → `backend/jobs/migrations/0001_initial.py`; apply with `python manage.py migrate` (run via `docker compose exec backend`)
-- [ ] T018 [US1] Create `StandardPagination` in `backend/jobs/pagination.py`: subclasses `PageNumberPagination`, `page_size = 25`, `page_size_query_param = 'page_size'`, `max_page_size = 100`
-- [ ] T019 [US1] Create `JobSerializer` in `backend/jobs/serializers.py`: `ModelSerializer` for `Job` with fields `id`, `name`, `current_status` (SerializerMethodField reading from annotated `current_status`), `created_at`, `updated_at`
-- [ ] T020 [US1] Implement `JobViewSet.list()` in `backend/jobs/views.py`: annotates queryset with `Subquery` selecting latest `status_type` per job (ordered by `-timestamp`), orders by `-created_at`, applies `StandardPagination`
-- [ ] T021 [US1] Register `JobViewSet` with `DefaultRouter` in `backend/jobs/urls.py`; include `jobs.urls` in `backend/config/urls.py` at prefix `api/`
-- [ ] T022 [P] [US1] Define TypeScript types in `frontend/src/types/job.ts`: `StatusType` union (`'PENDING' | 'RUNNING' | 'COMPLETED' | 'FAILED'`), `Job` interface, `PaginatedResponse<T>` interface
-- [ ] T023 [US1] Implement `fetchJobs(page?: number, pageSize?: number): Promise<PaginatedResponse<Job>>` in `frontend/src/services/api.ts`; throws `Error` with message on non-2xx response
-- [ ] T024 [P] [US1] Create `frontend/src/components/JobRow.tsx`: renders a table row with job `name` and `current_status` as a plain text badge (no interactive controls yet); accepts `job: Job` prop
-- [ ] T025 [US1] Create `frontend/src/components/JobList.tsx`: fetches jobs on mount with `fetchJobs()`; renders table of `JobRow` components; shows "No jobs yet" when `results` is empty; shows error message string when fetch throws; no pagination controls yet (page 1 only)
-- [ ] T026 [US1] Replace `frontend/src/App.tsx` content: render `<h1>Job Dashboard</h1>` and `<JobList />`; hold top-level error state; pass error setter to `JobList`
+- [x] T016 [P] [US1] Define `Job` and `JobStatus` models in `backend/jobs/models.py`: `Job` has `id` (AutoField PK), `name` (CharField max_length=255), `created_at`/`updated_at` (auto); `JobStatus` has `id`, `job` (FK→Job ON DELETE CASCADE), `status_type` (TextChoices: PENDING/RUNNING/COMPLETED/FAILED), `timestamp` (auto_now_add); add `Meta.indexes` with `Index(fields=['job', '-timestamp'])` on JobStatus
+- [x] T017 [US1] Generate and apply initial migration: `python manage.py makemigrations jobs` → `backend/jobs/migrations/0001_initial.py`; apply with `python manage.py migrate` (run via `docker compose exec backend`)
+- [x] T018 [US1] Create `StandardPagination` in `backend/jobs/pagination.py`: subclasses `PageNumberPagination`, `page_size = 25`, `page_size_query_param = 'page_size'`, `max_page_size = 100`
+- [x] T019 [US1] Create `JobSerializer` in `backend/jobs/serializers.py`: `ModelSerializer` for `Job` with fields `id`, `name`, `current_status` (SerializerMethodField reading from annotated `current_status`), `created_at`, `updated_at`
+- [x] T020 [US1] Implement `JobViewSet.list()` in `backend/jobs/views.py`: annotates queryset with `Subquery` selecting latest `status_type` per job (ordered by `-timestamp`), orders by `-created_at`, applies `StandardPagination`
+- [x] T021 [US1] Register `JobViewSet` with `DefaultRouter` in `backend/jobs/urls.py`; include `jobs.urls` in `backend/config/urls.py` at prefix `api/`
+- [x] T022 [P] [US1] Define TypeScript types in `frontend/src/types/job.ts`: `StatusType` union (`'PENDING' | 'RUNNING' | 'COMPLETED' | 'FAILED'`), `Job` interface, `PaginatedResponse<T>` interface
+- [x] T023 [US1] Implement `fetchJobs(page?: number, pageSize?: number): Promise<PaginatedResponse<Job>>` in `frontend/src/services/api.ts`; throws `Error` with message on non-2xx response
+- [x] T024 [P] [US1] Create `frontend/src/components/JobRow.tsx`: renders a table row with job `name` and `current_status` as a plain text badge (no interactive controls yet); accepts `job: Job` prop
+- [x] T025 [US1] Create `frontend/src/components/JobList.tsx`: fetches jobs on mount with `fetchJobs()`; renders table of `JobRow` components; shows "No jobs yet" when `results` is empty; shows error message string when fetch throws; includes Previous/Next pagination controls (G4 finding — FR-008 satisfied at Phase 3)
+- [x] T026 [US1] Replace `frontend/src/App.tsx` content: render `<h1>Job Dashboard</h1>` and `<JobList />`
 
 **Checkpoint**: `http://localhost:3000/` shows the job list (empty). Seeding a job directly via
 `curl -X POST http://localhost:8000/api/jobs/ -H 'Content-Type: application/json' -d '{"name":"test"}'`
