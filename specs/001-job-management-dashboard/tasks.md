@@ -149,10 +149,10 @@ deleting a nonexistent ID via curl → 404 returned.
 
 ### Implementation for User Story 4
 
-- [ ] T036 [US4] Add `destroy()` action to `JobViewSet` in `backend/jobs/views.py`: deletes the `Job` instance (cascade handles `JobStatus` records via `on_delete=CASCADE`); returns HTTP 204
-- [ ] T037 [US4] Implement `deleteJob(id: number): Promise<void>` in `frontend/src/services/api.ts`; DELETE to `/api/jobs/{id}/`; throw `Error` on non-2xx
-- [ ] T038 [US4] Add Delete `<button>` to `frontend/src/components/JobRow.tsx`: on click calls `deleteJob(job.id)`; on success calls `onDeleted(job.id)` prop; on failure shows inline error message; accept `onDeleted: (id: number) => void` prop
-- [ ] T039 [US4] Wire `onUpdated` and `onDeleted` callbacks in `frontend/src/components/JobList.tsx`: `onUpdated` replaces the matching job in local state; `onDeleted` filters the job out of local state; pass these down to each `JobRow`
+- [x] T036 [US4] Add `destroy()` action to `JobViewSet` in `backend/jobs/views.py`: deletes the `Job` instance (cascade handles `JobStatus` records via `on_delete=CASCADE`); returns HTTP 204
+- [x] T037 [US4] Implement `deleteJob(id: number): Promise<void>` in `frontend/src/services/api.ts`; DELETE to `/api/jobs/{id}/`; throw `Error` on non-2xx
+- [x] T038 [US4] Add Delete `<button>` to `frontend/src/components/JobRow.tsx`: on click calls `deleteJob(job.id)`; on success calls `onDeleted(job.id)` prop; on failure shows inline error message; accept `onDeleted: (id: number) => void` prop
+- [x] T039 [US4] Wire `onUpdated` and `onDeleted` callbacks in `frontend/src/components/JobList.tsx`: `onUpdated` replaces the matching job in local state; `onDeleted` filters the job out of local state; pass these down to each `JobRow`
 
 **Checkpoint**: Full CRUD cycle works in the browser without page reloads. `make up` still passes
 health checks after the full cycle.

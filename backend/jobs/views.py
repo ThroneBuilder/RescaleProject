@@ -46,3 +46,12 @@ class JobViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
 
         updated_job = self.get_queryset().get(pk=pk)
         return Response(JobSerializer(updated_job).data)
+
+    def destroy(self, request, pk=None):
+        try:
+            job = Job.objects.get(pk=pk)
+        except Job.DoesNotExist:
+            return Response({'detail': 'Not found.'}, status=status.HTTP_404_NOT_FOUND)
+
+        job.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)

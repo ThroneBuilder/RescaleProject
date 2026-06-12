@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { ChangeEvent } from 'react';
 
-import { updateJobStatus } from '../services/api';
+import { deleteJob, updateJobStatus } from '../services/api';
 import type { Job, StatusType } from '../types/job';
 
 const STATUS_OPTIONS: StatusType[] = ['PENDING', 'RUNNING', 'COMPLETED', 'FAILED'];
@@ -9,11 +9,13 @@ const STATUS_OPTIONS: StatusType[] = ['PENDING', 'RUNNING', 'COMPLETED', 'FAILED
 interface JobRowProps {
   job: Job;
   onUpdated: (job: Job) => void;
+  onDeleted: (id: number) => void;
 }
 
-export function JobRow({ job, onUpdated }: JobRowProps) {
+export function JobRow({ job, onUpdated, onDeleted }: JobRowProps) {
   const [error, setError] = useState<string | null>(null);
   const [updating, setUpdating] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   async function handleStatusChange(e: ChangeEvent<HTMLSelectElement>) {
     const newStatus = e.target.value as StatusType;
@@ -29,6 +31,20 @@ export function JobRow({ job, onUpdated }: JobRowProps) {
     }
   }
 
+  async function handleDelete() {
+    setDeleting(true);
+    setError(null);
+    try {
+      await deleteJob(job.id);
+      onDeleted(job.id);
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Delete failed');
+      setDeleting(false);
+    }
+  }
+
+  const busy = updating || deleting;
+
   return (
     <tr>
       <td>{job.name}</td>
@@ -36,13 +52,18 @@ export function JobRow({ job, onUpdated }: JobRowProps) {
         <select
           value={job.current_status ?? ''}
           onChange={handleStatusChange}
-          disabled={updating}
+          disabled={busy}
         >
           {!job.current_status && <option value="" disabled>—</option>}
           {STATUS_OPTIONS.map((s) => (
             <option key={s} value={s}>{s}</option>
           ))}
         </select>
+      </td>
+      <td>
+        <button onClick={handleDelete} disabled={busy}>
+          {deleting ? 'Deleting…' : 'Delete'}
+        </button>
         {error && <span> {error}</span>}
       </td>
     </tr>

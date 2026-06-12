@@ -29,6 +29,11 @@ export function JobList() {
     setJobs((prev) => prev.map((j) => (j.id === updatedJob.id ? updatedJob : j)));
   }
 
+  function handleJobDeleted(id: number) {
+    setJobs((prev) => prev.filter((j) => j.id !== id));
+    setTotalCount((c) => c - 1);
+  }
+
   if (loading) return <p>Loading…</p>;
   if (error) return <p>Error: {error}</p>;
   if (jobs.length === 0) return <p>No jobs yet.</p>;
@@ -42,11 +47,17 @@ export function JobList() {
           <tr>
             <th>Name</th>
             <th>Status</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {jobs.map((job) => (
-            <JobRow key={job.id} job={job} onUpdated={handleJobUpdated} />
+            <JobRow
+              key={job.id}
+              job={job}
+              onUpdated={handleJobUpdated}
+              onDeleted={handleJobDeleted}
+            />
           ))}
         </tbody>
       </table>
