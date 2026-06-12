@@ -192,11 +192,11 @@ exits 0 (deterministic).
 
 **Purpose**: UX polish, pagination controls, performance docs, README.
 
-- [ ] T046 [P] Style `frontend/src/App.css` and components: add table layout for job list, status color badges (PENDING=gray, RUNNING=blue, COMPLETED=green, FAILED=red), readable form layout; no external CSS framework required (plain CSS acceptable)
-- [ ] T047 Add pagination controls to `frontend/src/components/JobList.tsx`: Previous/Next buttons using `next`/`previous` URLs from paginated API response; disable buttons at first/last page; show current page and total count
-- [ ] T048 Add loading state to `frontend/src/components/JobList.tsx`: show "Loading..." text (or spinner) while `fetchJobs()` is in-flight; hide list during load
-- [ ] T049 [P] Write `README.md` at repository root: setup prerequisites, `make build` / `make up` / `make test` / `make stop` / `make clean` instructions, port reference (backend:8000, frontend:3000), performance considerations writeup (pagination strategy, DB indexes, large dataset behavior), time spent, AI usage / prompt engineering notes
-- [ ] T050 Create Django management command `backend/jobs/management/commands/seed_jobs.py`: accepts `--count N` arg; creates N jobs with random statuses for pagination testing (validates SC-005 with 10,000+ rows)
+- [X] T046 [P] Style `frontend/src/App.css` and components: add table layout for job list, status color badges (PENDING=gray, RUNNING=blue, COMPLETED=green, FAILED=red), readable form layout; no external CSS framework required (plain CSS acceptable)
+- [X] T047 Add pagination controls to `frontend/src/components/JobList.tsx`: Previous/Next buttons using `next`/`previous` URLs from paginated API response; disable buttons at first/last page; show current page and total count
+- [X] T048 Add loading state to `frontend/src/components/JobList.tsx`: show "Loading..." text (or spinner) while `fetchJobs()` is in-flight; hide list during load
+- [X] T049 [P] Write `README.md` at repository root: setup prerequisites, `make build` / `make up` / `make test` / `make stop` / `make clean` instructions, port reference (backend:8000, frontend:3000), performance considerations writeup (pagination strategy, DB indexes, large dataset behavior), time spent, AI usage / prompt engineering notes
+- [X] T050 Create Django management command `backend/jobs/management/commands/seed_jobs.py`: accepts `--count N` arg; creates N jobs with random statuses for pagination testing (validates SC-005 with 10,000+ rows)
 
 ---
 

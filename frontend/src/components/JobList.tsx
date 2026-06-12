@@ -61,14 +61,14 @@ export function JobList() {
           ))}
         </tbody>
       </table>
-      <div>
-        <button onClick={() => setPage((p) => p - 1)} disabled={page === 1}>
+      <div className="pagination">
+        <button type="button" onClick={() => setPage((p) => p - 1)} disabled={page === 1}>
           Previous
         </button>
         <span>
           Page {page} of {totalPages} ({totalCount} total)
         </span>
-        <button onClick={() => setPage((p) => p + 1)} disabled={page >= totalPages}>
+        <button type="button" onClick={() => setPage((p) => p + 1)} disabled={page >= totalPages}>
           Next
         </button>
       </div>

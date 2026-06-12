@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import './App.css';
 import { CreateJobForm } from './components/CreateJobForm';
 import { JobList } from './components/JobList';
 import type { Job } from './types/job';

@@ -44,7 +44,7 @@ export function CreateJobForm({ onCreated }: CreateJobFormProps) {
       <button type="submit" disabled={submitting}>
         {submitting ? 'Creating…' : 'Create Job'}
       </button>
-      {error && <span>{error}</span>}
+      {error && <span className="form-error">{error}</span>}
     </form>
   );
 }

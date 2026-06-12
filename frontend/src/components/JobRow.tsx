@@ -48,7 +48,7 @@ export function JobRow({ job, onUpdated, onDeleted }: JobRowProps) {
   return (
     <tr>
       <td>{job.name}</td>
-      <td>
+      <td data-status={job.current_status ?? 'none'}>
         <select
           value={job.current_status ?? ''}
           onChange={handleStatusChange}
@@ -61,10 +61,10 @@ export function JobRow({ job, onUpdated, onDeleted }: JobRowProps) {
         </select>
       </td>
       <td>
-        <button onClick={handleDelete} disabled={busy}>
+        <button type="button" className="btn-danger" onClick={handleDelete} disabled={busy}>
           {deleting ? 'Deleting…' : 'Delete'}
         </button>
-        {error && <span> {error}</span>}
+        {error && <span className="row-error">{error}</span>}
       </td>
     </tr>
   );
