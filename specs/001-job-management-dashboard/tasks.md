@@ -35,9 +35,9 @@ README.md
 
 **Purpose**: Create the repository skeleton. No application logic yet.
 
-- [ ] T001 Create top-level directory structure: `backend/`, `frontend/`, `tests/` at repository root
-- [ ] T002 [P] Initialize Django project in `backend/`: run `django-admin startproject config .` (produces `backend/manage.py`, `backend/config/`)
-- [ ] T003 [P] Initialize React+TypeScript Vite project in `frontend/`: run `npm create vite@latest . -- --template react-ts` (produces `frontend/src/`, `frontend/package.json`, `frontend/vite.config.ts`)
+- [x] T001 Create top-level directory structure: `backend/`, `frontend/`, `tests/` at repository root
+- [x] T002 [P] Initialize Django project in `backend/`: run `django-admin startproject config .` (produces `backend/manage.py`, `backend/config/`)
+- [x] T003 [P] Initialize React+TypeScript Vite project in `frontend/`: run `npm create vite@latest . -- --template react-ts` (produces `frontend/src/`, `frontend/package.json`, `frontend/vite.config.ts`)
 
 ---
 
