@@ -187,9 +187,9 @@ job listing.
 
 ### Key Entities
 
-- **Job**: A computational task. Identified by a unique name. Records creation and last
-  modification timestamps automatically. Its current status is always derived from the
-  most recent status record, not stored directly on the job.
+- **Job**: A computational task. Identified by a name (duplicates permitted — no uniqueness
+  constraint). Records creation and last modification timestamps automatically. Its current
+  status is always derived from the most recent status record, not stored directly on the job.
 - **Job Status**: An immutable point-in-time record of a job's state. Appended on every
   status change — never updated in place. Belongs to exactly one job. Removal of a job
   removes all its status records. Valid status types: PENDING, RUNNING, COMPLETED, FAILED.
