@@ -18,7 +18,9 @@
       "PowerShell(Invoke-RestMethod -Uri \"http://localhost:8000/api/jobs/4/\" -Method PATCH -ContentType \"application/json\" -Body '{\"status_type\":\"RUNNING\"}')",
       "PowerShell(try { Invoke-RestMethod -Uri \"http://localhost:8000/api/jobs/4/\" -Method PATCH -ContentType \"application/json\" -Body '{\"status_type\":\"INVALID\"}' } catch { $_.ErrorDetails.Message })",
       "PowerShell(docker run --rm -v \"${PWD}/tests:/app\" -w /app node:20-alpine npm install --package-lock-only 2>&1)",
-      "PowerShell(docker run --rm -v \"${PWD}/tests:/app\" -w /app mcr.microsoft.com/playwright:v1.50.0-noble npm install --package-lock-only 2>&1)"
+      "PowerShell(docker run --rm -v \"${PWD}/tests:/app\" -w /app mcr.microsoft.com/playwright:v1.50.0-noble npm install --package-lock-only 2>&1)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)"
     ]
   }
 }
