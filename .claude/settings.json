@@ -10,7 +10,11 @@
       "PowerShell(docker compose logs backend --tail 30)",
       "PowerShell(docker compose logs backend --tail 20)",
       "PowerShell(curl -s http://localhost:3000/api/jobs/)",
-      "PowerShell(curl -s \"http://localhost:8000/api/jobs/?page=1&page_size=2\")"
+      "PowerShell(curl -s \"http://localhost:8000/api/jobs/?page=1&page_size=2\")",
+      "PowerShell(curl -s -X POST http://localhost:8000/api/jobs/ -H \"Content-Type: application/json\" -d \"{\\\\\"name\\\\\":\\\\\"My Test Job\\\\\"}\")",
+      "PowerShell(Invoke-RestMethod -Uri http://localhost:8000/api/jobs/ -Method POST -ContentType \"application/json\" -Body '{\"name\":\"My Test Job\"}')",
+      "PowerShell(Invoke-RestMethod -Uri http://localhost:8000/api/jobs/ -Method POST -ContentType \"application/json\" -Body '{\"name\":\"\"}')",
+      "PowerShell(Invoke-RestMethod -Uri \"http://localhost:8000/api/jobs/\")"
     ]
   }
 }

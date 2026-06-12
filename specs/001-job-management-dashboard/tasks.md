@@ -106,11 +106,11 @@ empty → validation error shown, no network request made. Stop backend → subm
 
 ### Implementation for User Story 2
 
-- [ ] T027 [US2] Create `JobCreateSerializer` in `backend/jobs/serializers.py`: accepts `name` (CharField, required, non-empty); `create()` method uses `@transaction.atomic` to create `Job` then `JobStatus(status_type='PENDING')`; returns serialized job with `current_status`
-- [ ] T028 [US2] Add `create()` action to `JobViewSet` in `backend/jobs/views.py`: uses `JobCreateSerializer`; returns HTTP 201 with created job body
-- [ ] T029 [US2] Implement `createJob(name: string): Promise<Job>` in `frontend/src/services/api.ts`; POST to `/api/jobs/`; throw `Error` on non-2xx
-- [ ] T030 [US2] Create `frontend/src/components/CreateJobForm.tsx`: controlled `<input>` for name; client-side validation blocks submit when name is empty (shows inline "Name is required" message); on submit calls `createJob()`; calls `onCreated(job)` prop callback on success; shows inline API error message on failure; clears input on success
-- [ ] T031 [US2] Integrate `CreateJobForm` into `frontend/src/App.tsx`: pass `onCreated` callback that prepends the new job to the current list (optimistic UI) or re-fetches page 1
+- [x] T027 [US2] Create `JobCreateSerializer` in `backend/jobs/serializers.py`: accepts `name` (CharField, required, non-empty); `create()` method uses `@transaction.atomic` to create `Job` then `JobStatus(status_type='PENDING')`; returns serialized job with `current_status`
+- [x] T028 [US2] Add `create()` action to `JobViewSet` in `backend/jobs/views.py`: uses `JobCreateSerializer`; returns HTTP 201 with created job body
+- [x] T029 [US2] Implement `createJob(name: string): Promise<Job>` in `frontend/src/services/api.ts`; POST to `/api/jobs/`; throw `Error` on non-2xx
+- [x] T030 [US2] Create `frontend/src/components/CreateJobForm.tsx`: controlled `<input>` for name; client-side validation blocks submit when name is empty (shows inline "Name is required" message); on submit calls `createJob()`; calls `onCreated(job)` prop callback on success; shows inline API error message on failure; clears input on success
+- [x] T031 [US2] Integrate `CreateJobForm` into `frontend/src/App.tsx`: pass `onCreated` callback that re-fetches page 1 (via React key remount of JobList)
 
 **Checkpoint**: Submit a new job in the browser → it appears immediately in the list with PENDING.
 Empty submit → error shown. `curl` the list → new job visible with correct status.
