@@ -25,6 +25,10 @@ export function JobList() {
       .finally(() => setLoading(false));
   }, [page]);
 
+  function handleJobUpdated(updatedJob: Job) {
+    setJobs((prev) => prev.map((j) => (j.id === updatedJob.id ? updatedJob : j)));
+  }
+
   if (loading) return <p>Loading…</p>;
   if (error) return <p>Error: {error}</p>;
   if (jobs.length === 0) return <p>No jobs yet.</p>;
@@ -42,7 +46,7 @@ export function JobList() {
         </thead>
         <tbody>
           {jobs.map((job) => (
-            <JobRow key={job.id} job={job} />
+            <JobRow key={job.id} job={job} onUpdated={handleJobUpdated} />
           ))}
         </tbody>
       </table>

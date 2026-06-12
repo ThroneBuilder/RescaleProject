@@ -1,4 +1,4 @@
-import type { Job, PaginatedResponse } from '../types/job';
+import type { Job, PaginatedResponse, StatusType } from '../types/job';
 
 const BASE_URL = '/api';
 
@@ -18,6 +18,18 @@ export async function createJob(name: string): Promise<Job> {
   });
   if (!response.ok) {
     throw new Error(`Failed to create job: ${response.statusText}`);
+  }
+  return response.json();
+}
+
+export async function updateJobStatus(id: number, statusType: StatusType): Promise<Job> {
+  const response = await fetch(`${BASE_URL}/jobs/${id}/`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ status_type: statusType }),
+  });
+  if (!response.ok) {
+    throw new Error(`Failed to update job status: ${response.statusText}`);
   }
   return response.json();
 }

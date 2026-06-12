@@ -129,10 +129,10 @@ page → RUNNING persists. Verify via `GET /api/jobs/` that previous status reco
 
 ### Implementation for User Story 3
 
-- [ ] T032 [US3] Create `StatusUpdateSerializer` in `backend/jobs/serializers.py`: write-only `status_type` CharField validated against `JobStatus.StatusType.values`; raises `ValidationError` on unknown value
-- [ ] T033 [US3] Add `partial_update()` action to `JobViewSet` in `backend/jobs/views.py`: validates body with `StatusUpdateSerializer`; creates new `JobStatus(job=instance, status_type=validated_status_type)`; returns updated job serialized with `JobSerializer` (re-annotated)
-- [ ] T034 [US3] Implement `updateJobStatus(id: number, statusType: StatusType): Promise<Job>` in `frontend/src/services/api.ts`; PATCH to `/api/jobs/{id}/`; throw `Error` on non-2xx
-- [ ] T035 [US3] Add `<select>` to `frontend/src/components/JobRow.tsx`: options are PENDING/RUNNING/COMPLETED/FAILED; `value` bound to `job.current_status`; `onChange` calls `updateJobStatus()`; on success calls `onUpdated(updatedJob)` prop; on failure shows inline error span next to dropdown; accept `onUpdated: (job: Job) => void` prop
+- [x] T032 [US3] Create `StatusUpdateSerializer` in `backend/jobs/serializers.py`: write-only `status_type` CharField validated against `JobStatus.StatusType.values`; raises `ValidationError` on unknown value
+- [x] T033 [US3] Add `partial_update()` action to `JobViewSet` in `backend/jobs/views.py`: validates body with `StatusUpdateSerializer`; creates new `JobStatus(job=instance, status_type=validated_status_type)`; returns updated job serialized with `JobSerializer` (re-annotated)
+- [x] T034 [US3] Implement `updateJobStatus(id: number, statusType: StatusType): Promise<Job>` in `frontend/src/services/api.ts`; PATCH to `/api/jobs/{id}/`; throw `Error` on non-2xx
+- [x] T035 [US3] Add `<select>` to `frontend/src/components/JobRow.tsx`: options are PENDING/RUNNING/COMPLETED/FAILED; `value` bound to `job.current_status`; `onChange` calls `updateJobStatus()`; on success calls `onUpdated(updatedJob)` prop; on failure shows inline error span next to dropdown; accept `onUpdated: (job: Job) => void` prop; JobList.tsx wired with handleJobUpdated (replaces matching job in local state)
 
 **Checkpoint**: Change status via dropdown → list updates immediately. Reload page → new status
 persists. Invalid PATCH body (tested via curl with bad status) → 400 returned.

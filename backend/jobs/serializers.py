@@ -24,3 +24,7 @@ class JobCreateSerializer(serializers.Serializer):
         JobStatus.objects.create(job=job, status_type=JobStatus.StatusType.PENDING)
         job.current_status = JobStatus.StatusType.PENDING
         return job
+
+
+class StatusUpdateSerializer(serializers.Serializer):
+    status_type = serializers.ChoiceField(choices=JobStatus.StatusType.choices)
