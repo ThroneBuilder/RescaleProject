@@ -49,18 +49,18 @@ README.md
 **⚠️ CRITICAL**: No user story work (US1–US4) can begin until this phase is complete and
 `make up` shows all services as `healthy`.
 
-- [ ] T004 [US5] Create `backend/requirements.txt` with exact pinned versions: `Django==5.1.*`, `djangorestframework==3.15.*`, `psycopg2-binary==2.9.*`, `gunicorn==22.*`
-- [ ] T005 [US5] Write `backend/Dockerfile`: multi-stage (`python:3.12-slim` builder installs deps, runtime copies app; final CMD: `sh -c "python manage.py migrate --noinput && gunicorn config.wsgi:application --bind 0.0.0.0:8000"`) — migration runs automatically on every container start, which is safe and idempotent
-- [ ] T006 [P] [US5] Write `frontend/nginx.conf`: location `/api/` proxies to `http://backend:8000`; location `/` serves SPA with `try_files $uri $uri/ /index.html`
-- [ ] T007 [P] [US5] Write `frontend/Dockerfile`: multi-stage (`node:20-alpine` builder runs `npm ci && npm run build`; `nginx:alpine` runtime copies `dist/` to `/usr/share/nginx/html` and `nginx.conf` to `/etc/nginx/conf.d/default.conf`)
-- [ ] T008 [US5] Create Django `jobs` app: run `python manage.py startapp jobs` inside `backend/`; produces `backend/jobs/`
-- [ ] T009 [US5] Configure `backend/config/settings.py`: replace SQLite DATABASES block with PostgreSQL using env vars `DB_NAME`, `DB_USER`, `DB_PASSWORD`, `DB_HOST`, `DB_PORT`; set `ALLOWED_HOSTS = ['*']` for containerized use; set `SECRET_KEY` from env var
-- [ ] T010 [US5] Add `rest_framework` and `jobs` to `INSTALLED_APPS` in `backend/config/settings.py`; configure DRF default renderer to JSON only
-- [ ] T011 [US5] Create health check view in `backend/jobs/views.py`: `GET /api/health/` returns `{"status": "ok"}` with HTTP 200; wire into `backend/config/urls.py` at path `api/health/`
-- [ ] T012 [US5] Write `docker-compose.yml` with four services: `db` (`postgres:16-alpine`, health check `pg_isready`), `backend` (depends on db healthy, health check `curl -f http://localhost:8000/api/health/`), `frontend` (depends on backend healthy, health check `curl -f http://localhost:80/`), `tests` (placeholder — `depends_on: frontend: condition: service_healthy`)
-- [ ] T013 [US5] Write `Makefile` with targets: `build` (`docker compose build`), `up` (`docker compose up -d --wait`), `test` (see below — self-contained), `stop` (`docker compose stop`), `clean` (`docker compose down -v --remove-orphans`). The `test` target MUST build and start the stack itself: `docker compose up --build -d --wait && docker compose run --rm tests echo "no tests yet"` — this ensures `make test` alone works on a clean machine as required by the assignment
-- [ ] T014 [P] [US5] Update `frontend/tsconfig.json` to enable `"strict": true`; create directory stubs `frontend/src/components/`, `frontend/src/services/`, `frontend/src/types/`
-- [ ] T015 [US5] Stub `frontend/src/App.tsx` to render a single `<h1>Job Dashboard</h1>` heading with no API calls (replaces Vite default content)
+- [x] T004 [US5] Create `backend/requirements.txt` with exact pinned versions: `Django==5.1.*`, `djangorestframework==3.15.*`, `psycopg2-binary==2.9.*`, `gunicorn==22.*`
+- [x] T005 [US5] Write `backend/Dockerfile`: multi-stage (`python:3.12-slim` builder installs deps, runtime copies app; final CMD: `sh -c "python manage.py migrate --noinput && gunicorn config.wsgi:application --bind 0.0.0.0:8000"`) — migration runs automatically on every container start, which is safe and idempotent
+- [x] T006 [P] [US5] Write `frontend/nginx.conf`: location `/api/` proxies to `http://backend:8000`; location `/` serves SPA with `try_files $uri $uri/ /index.html`
+- [x] T007 [P] [US5] Write `frontend/Dockerfile`: multi-stage (`node:20-alpine` builder runs `npm ci && npm run build`; `nginx:alpine` runtime copies `dist/` to `/usr/share/nginx/html` and `nginx.conf` to `/etc/nginx/conf.d/default.conf`)
+- [x] T008 [US5] Create Django `jobs` app: run `python manage.py startapp jobs` inside `backend/`; produces `backend/jobs/`
+- [x] T009 [US5] Configure `backend/config/settings.py`: replace SQLite DATABASES block with PostgreSQL using env vars `DB_NAME`, `DB_USER`, `DB_PASSWORD`, `DB_HOST`, `DB_PORT`; set `ALLOWED_HOSTS = ['*']` for containerized use; set `SECRET_KEY` from env var
+- [x] T010 [US5] Add `rest_framework` and `jobs` to `INSTALLED_APPS` in `backend/config/settings.py`; configure DRF default renderer to JSON only
+- [x] T011 [US5] Create health check view in `backend/jobs/views.py`: `GET /api/health/` returns `{"status": "ok"}` with HTTP 200; wire into `backend/config/urls.py` at path `api/health/`
+- [x] T012 [US5] Write `docker-compose.yml` with four services: `db` (`postgres:16-alpine`, health check `pg_isready`), `backend` (depends on db healthy, health check `curl -f http://localhost:8000/api/health/`), `frontend` (depends on backend healthy, health check `curl -f http://localhost:80/`), `tests` (placeholder — `depends_on: frontend: condition: service_healthy`)
+- [x] T013 [US5] Write `Makefile` with targets: `build` (`docker compose build`), `up` (`docker compose up -d --wait`), `test` (see below — self-contained), `stop` (`docker compose stop`), `clean` (`docker compose down -v --remove-orphans`). The `test` target MUST build and start the stack itself: `docker compose up --build -d --wait && docker compose run --rm tests echo "no tests yet"` — this ensures `make test` alone works on a clean machine as required by the assignment
+- [x] T014 [P] [US5] Update `frontend/tsconfig.json` to enable `"strict": true`; create directory stubs `frontend/src/components/`, `frontend/src/services/`, `frontend/src/types/`
+- [x] T015 [US5] Stub `frontend/src/App.tsx` to render a single `<h1>Job Dashboard</h1>` heading with no API calls (replaces Vite default content)
 
 **Checkpoint**: `make build && make up` completes without errors. `docker compose ps` shows all
 three services (db, backend, frontend) as healthy. `curl http://localhost:8000/api/health/`
